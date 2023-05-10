@@ -29,6 +29,7 @@ public class Server implements Runnable {
             }
         } catch (IOException e) {
             System.out.println("could not open socket on serwer side.");
+            shoutdown();
         }
     }
 
@@ -48,7 +49,9 @@ public class Server implements Runnable {
             }catch (IOException e){
                 System.out.println(e);
             }
-
+            for(ConnectionHandler connection : connections){
+                connection.shoutdown();
+            }
         }
     }
 
@@ -83,16 +86,29 @@ public class Server implements Runnable {
                         }
                         // TODO: handle login
                     }else if(msg.startsWith("/logout ")) {
-                        // TODO: handle logout
+                        broadcast(login +" has left the chat ");
+                        shoutdown();
                     }else{
                         broadcast(login +": "+ msg);
                     }
                 }
             }catch (IOException e){
                 System.out.println("error");
+                shoutdown();
             }
         }
 
+        public void shoutdown(){
+            try{
+                in.close();
+                out.close();
+                if (!client.isClosed()) {
+                    client.close();
+                }
+            }catch(IOException e){
+                System.out.println("error while closing");
+            }
+        }
         public void sendMessage(String msg){
             out.println(msg);
         }

@@ -21,17 +21,20 @@ public class Server implements Runnable {
     @Override
     public void run() {
         try {
+            socket = new ServerSocket(6633);
+            pool = Executors.newCachedThreadPool();
             while(!done){
-                socket = new ServerSocket(8989);
-                pool = Executors.newCachedThreadPool();
                 Socket client = socket.accept();
                 ConnectionHandler handler = new ConnectionHandler(client, this);
                 connections.add(handler);
                 pool.execute(handler);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("could not open socket on serwer side.");
-            shoutdown();
+            System.out.println(e);
+
+            throw new RuntimeException(e);
+
         }
     }
 

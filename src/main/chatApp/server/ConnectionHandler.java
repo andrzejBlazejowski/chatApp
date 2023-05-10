@@ -21,7 +21,7 @@ public class ConnectionHandler implements Runnable{
         try{
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out.println("Please enter a nickname");
+            out.println("Please enter a login name");
             login = in.readLine();
             System.out.println(login + "has joined chat");
             server.broadcast(login + "has joined chat");

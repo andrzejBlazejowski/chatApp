@@ -58,6 +58,8 @@ public class Client implements Runnable {
                     if (msg.equals("/logout")){
                         inReader.close();
                         shutdown();
+                    }else {
+                        System.out.println(msg);
                     }
                 }
             } catch (IOException e){

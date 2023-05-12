@@ -9,12 +9,14 @@ import java.util.concurrent.Executors;
 
 public class Server implements Runnable {
     private ArrayList<ConnectionHandler> connections;
+    private ArrayList<User> users;
     private ServerSocket socket;
     private boolean done;
     private ExecutorService pool;
 
     public Server(){
         connections = new ArrayList<>();
+        users = new ArrayList<>();
         done = false;
     }
 

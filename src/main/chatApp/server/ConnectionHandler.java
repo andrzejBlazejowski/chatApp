@@ -37,8 +37,10 @@ public class ConnectionHandler implements Runnable{
                     }else{
                         System.out.println("no login entered");
                     }
-                    // TODO: handle login
                 }else if(msg.startsWith("/logout ")) {
+                    server.broadcast(login +" has left the chat ");
+                    shoutdown();
+                }else if(msg.startsWith("/register ")) {
                     server.broadcast(login +" has left the chat ");
                     shoutdown();
                 }else{

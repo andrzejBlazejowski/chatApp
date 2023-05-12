@@ -56,7 +56,7 @@ public class Client implements Runnable {
                 BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
                 while(!done){
                     String msg = inReader.readLine();
-                    if (msg.equals("/logout")){
+                    if (msg.equals(ServerConfig.LogoutAction)){
                         inReader.close();
                         shutdown();
                     }else {
@@ -66,6 +66,18 @@ public class Client implements Runnable {
             } catch (IOException e){
                 shutdown();
             }
+        }
+
+        private void register(String login, String password){
+            out.println(ServerConfig.RegisterAction + login + ServerConfig.Separator + password);
+        }
+
+        private void login(String login, String password){
+            out.println(ServerConfig.LoginAction + login + ServerConfig.Separator + password);
+        }
+
+        private void sendMsg(String msg){
+            out.println(msg);
         }
     }
     public static void main (String[] args) {

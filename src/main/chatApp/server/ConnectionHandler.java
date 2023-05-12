@@ -34,14 +34,14 @@ public class ConnectionHandler implements Runnable{
             while((msg = in.readLine()) != null){
 
                 System.out.println("new message");
-                if(msg.startsWith("/login ") || msg.startsWith("/register ")){
+                if(msg.startsWith(ServerConfig.LoginAction) || msg.startsWith(ServerConfig.RegisterAction)){
                     String[] messageSplit = msg.split(" ", 2);
-                    if (msg.startsWith("/login")){
+                    if (msg.startsWith(ServerConfig.LoginAction)){
                         handleLogin(messageSplit[1]);
-                    } else if (msg.startsWith("/register")) {
+                    } else if (msg.startsWith(ServerConfig.RegisterAction)) {
                         handleRegister(messageSplit[1]);
                     }
-                }else if(msg.startsWith("/logout ")) {
+                }else if(msg.startsWith(ServerConfig.LogoutAction)) {
                     handleLogout();
                 }else{
                     server.broadcast(user.getLogin() +": "+ msg);

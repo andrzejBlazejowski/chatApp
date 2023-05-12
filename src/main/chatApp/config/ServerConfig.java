@@ -1,8 +1,8 @@
 package config;
 
 public class ServerConfig {
-    static char separator = '`';
-    static int port = 6633;
-    static String hostAddress = "127.0.0.1";
+    public static char Separator = '`';
+    public static int Port = 6633;
+    public static String HostAddress = "127.0.0.1";
 
 }

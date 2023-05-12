@@ -1,5 +1,7 @@
 package server;
 
+import config.ServerConfig;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,7 +25,7 @@ public class Server implements Runnable {
     @Override
     public void run() {
         try {
-            socket = new ServerSocket(6633);
+            socket = new ServerSocket(ServerConfig.Port);
             pool = Executors.newCachedThreadPool();
             while(!done){
                 Socket client = socket.accept();

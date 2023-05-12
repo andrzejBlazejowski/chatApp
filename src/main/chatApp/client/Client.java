@@ -1,5 +1,6 @@
 package client;
 
+import config.ServerConfig;
 import server.Server;
 
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ public class Client implements Runnable {
     @Override
     public void run() {
         try{
-            Socket client = new Socket("127.0.0.1", 6633);
+            Socket client = new Socket(ServerConfig.HostAddress, ServerConfig.Port);
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 

@@ -4,9 +4,14 @@ public class User {
     private String login;
     private String password;
 
-    public void User(String login, String password) {
+    public User(String login, String password) {
         setLogin(login);
         setPassword(password);
+    }
+
+    public User(String[] user) {
+        setLogin(user[0]);
+        setPassword(user[1]);
     }
 
     public String getLogin() {

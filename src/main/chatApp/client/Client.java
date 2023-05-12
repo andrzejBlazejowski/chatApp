@@ -60,7 +60,7 @@ public class Client implements Runnable {
                         inReader.close();
                         shutdown();
                     }else {
-                        System.out.println(msg);
+                        out.println(msg);
                     }
                 }
             } catch (IOException e){

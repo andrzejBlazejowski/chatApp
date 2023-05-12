@@ -16,7 +16,7 @@ public class Server implements Runnable {
     private boolean done;
     private ExecutorService pool;
 
-    public Server(){
+    public Server() {
         connections = new ArrayList<>();
         users = new ArrayList<>();
         done = false;
@@ -29,6 +29,7 @@ public class Server implements Runnable {
             pool = Executors.newCachedThreadPool();
             while(!done){
                 Socket client = socket.accept();
+                System.out.println("new client");
                 ConnectionHandler handler = new ConnectionHandler(client, this);
                 connections.add(handler);
                 pool.execute(handler);
@@ -68,4 +69,26 @@ public class Server implements Runnable {
         srv.run();
     }
 
+    public void registerUser(User user) {
+        users.add(user);
+    }
+    public void changePassword(User user) {
+        for (User usr:users) {
+            if (usr.getLogin().equals(user.getLogin())){
+                usr.setPassword(user.getPassword());
+            }
+        }
+    }
+    public int loginUser(User user) {
+        for (User usr:users) {
+            if (usr.getLogin().equals(user.getLogin())){
+                if (usr.getPassword().equals(user.getPassword())){
+                    return 200;
+                }else{
+                    return 403;
+                }
+            }
+        }
+        return 404;
+    }
 }

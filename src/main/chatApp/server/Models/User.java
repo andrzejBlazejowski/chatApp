@@ -1,4 +1,4 @@
-package server;
+package server.Models;
 
 public class User {
     private String login;

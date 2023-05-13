@@ -1,6 +1,7 @@
 package server;
 
 import config.ServerConfig;
+import server.Models.User;
 
 import java.io.IOException;
 import java.net.ServerSocket;

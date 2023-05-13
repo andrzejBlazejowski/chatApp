@@ -2,10 +2,15 @@ package client.Views;
 
 import client.Models.Message;
 import client.Views.Components.MessageListCellRenderer;
+import client.Views.UserViews.ChangeLogin;
+import client.Views.UserViews.Login;
+import client.Views.UserViews.Register;
 import server.Models.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -53,6 +58,7 @@ public class ChatView extends javax.swing.JFrame {
         setTitle("Chat App");
 
         jButton1.setText("Logowanie");
+        jButton1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 handleLoginPress(evt);
@@ -60,6 +66,7 @@ public class ChatView extends javax.swing.JFrame {
         });
 
         jButton2.setText("Zmień Login");
+        jButton2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 handleChangeLoginPress(evt);
@@ -67,6 +74,7 @@ public class ChatView extends javax.swing.JFrame {
         });
 
         jButton3.setText("Rejestracja");
+        jButton3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 handleRegisterPress(evt);
@@ -128,15 +136,54 @@ public class ChatView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void handleRegisterPress(ActionEvent evt) {
+        Register window = new Register(new User("", ""));
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                handleRegisterUserChange();
+            }
+        });
+        window.setVisible(true);
+    }
+
+    private void handleRegisterUserChange() {
+        // TODO add your handling code here:
     }
 
     private void handleChangeLoginPress(ActionEvent evt) {
+        ChangeLogin window = new ChangeLogin(new User("", ""));
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                handleChangeLoginUserChange();
+            }
+        });
+        window.setVisible(true);
+    }
+
+    private void handleChangeLoginUserChange() {
+        // TODO add your handling code here:
+    }
+
+    private void handleLoginUserChange() {
+        // TODO add your handling code here:
     }
 
     private void handleLoginPress(ActionEvent evt) {
+        Login window = new Login(new User("", ""));
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                handleLoginUserChange();
+            }
+        });
+        window.setVisible(true);
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

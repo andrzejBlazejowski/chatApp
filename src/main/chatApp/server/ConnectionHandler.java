@@ -1,6 +1,7 @@
 package server;
 
 import config.ServerConfig;
+import server.Models.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;

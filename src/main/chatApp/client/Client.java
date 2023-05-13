@@ -22,8 +22,11 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
     private BufferedReader in;
     private PrintWriter out;
     private boolean done;
+    private User user;
     public Client(){
-        done = false;
+
+        setDone(false);
+        setUser(new User("", ""));
     }
     InputHandler inputHandler;
 
@@ -31,7 +34,6 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
     public void run() {
         try{
             ChatView window = new ChatView();
-            window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             window.setLoginActionListener(this);
             window.setLoginChangeActionListener(this);
             window.setRegisterActionListener(this);
@@ -53,8 +55,11 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
             t.start();
             String inMsg;
             while ((inMsg = in.readLine()) != null){
-                System.out.println(inMsg);
-                window.setNewMessage(Message.getMessageFromString(inMsg));
+                Message msg = Message.getMessageFromString(inMsg);
+                if (!msg.getAuthor().isEmpty() && msg.getAuthor().equals(getUser().getLogin())){
+                    msg.setAlignLeft(false);
+                }
+                window.setNewMessage(msg);
             }
         }catch (IOException e){
             shutdown();
@@ -119,5 +124,13 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
 
     public void setIn(BufferedReader in) {
         this.in = in;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -13,6 +13,7 @@ import server.Models.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -35,8 +36,9 @@ public class ChatView extends javax.swing.JFrame {
      */
     public ChatView() {
         initComponents();
+        user = new User("", "");
         messageListModel = new DefaultListModel<Message>();
-        JList<Message> messageList = new JList<>(messageListModel);
+        MessageWrapper.setModel(messageListModel);
 
         MessageWrapper.setCellRenderer(new MessageListCellRenderer());
     }
@@ -54,7 +56,7 @@ public class ChatView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        MessageTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -62,6 +64,17 @@ public class ChatView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         MessageWrapper = new javax.swing.JList<>();
 
+        MessageTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String msg = MessageTextField.getText();
+                SendMessageActionListener listener = getSendMessageActionListener();
+                if (listener != null) {
+                    listener.onSendMessageActionListener(msg);
+                }
+                MessageTextField.setText("");
+            }
+        });
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chat App");
 
@@ -124,7 +137,7 @@ public class ChatView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(MessageTextField, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -134,7 +147,7 @@ public class ChatView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(MessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -144,7 +157,7 @@ public class ChatView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void handleRegisterPress(ActionEvent evt) {
-        Register window = new Register(new User("", ""));
+        Register window = new Register(getUser());
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.addWindowListener(new WindowAdapter() {
@@ -159,12 +172,12 @@ public class ChatView extends javax.swing.JFrame {
     private void handleRegisterUserChange() {
         RegisterActionListener listener = getRegisterActionListener();
         if (listener != null) {
-            listener.onRegisterActionListener(user);
+            listener.onRegisterActionListener(getUser());
         }
     }
 
     private void handleChangeLoginPress(ActionEvent evt) {
-        ChangeLogin window = new ChangeLogin(new User("", ""));
+        ChangeLogin window = new ChangeLogin(getUser());
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.addWindowListener(new WindowAdapter() {
@@ -179,18 +192,19 @@ public class ChatView extends javax.swing.JFrame {
     private void handleChangeLoginUserChange() {
         LoginChangeActionListener listener = getLoginChangeActionListener();
         if (listener != null) {
-            listener.onLoginChangeActionListener(user);
+            listener.onLoginChangeActionListener(getUser());
         }
     }
 
     private void handleLoginPress(ActionEvent evt) {
-        Login window = new Login(new User("", ""));
-        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        Login window = new Login(getUser());
+        //window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                handleLoginUserChange();
+            System.out.println("====================================");
+            handleLoginUserChange();
             }
         });
         window.setVisible(true);
@@ -199,7 +213,7 @@ public class ChatView extends javax.swing.JFrame {
     private void handleLoginUserChange() {
         LoginActionListener listener = getLoginActionListener();
         if (listener != null) {
-            listener.onLoginActionListener(user);
+            listener.onLoginActionListener(getUser());
         }
     }
 
@@ -250,10 +264,10 @@ public class ChatView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> MessageWrapper;
+    private javax.swing.JList<Message> MessageWrapper;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField MessageTextField;
 
     public String getTextInput() {
         return textInput;

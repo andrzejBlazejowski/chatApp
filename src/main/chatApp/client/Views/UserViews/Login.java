@@ -5,14 +5,22 @@ package client.Views.UserViews;/*
 
 import server.Models.User;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 /**
  *
  * @author andrz
  */
 public class Login extends javax.swing.JFrame {
-    User user;
+    private User user;
+    public User getUser(){
+        return user;
+    }
+    public void setUser(User user){
+        this.user = user;
+    }
     public String getLogin(){
         return Login.getText();
     }
@@ -26,7 +34,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login(User user) {
         initComponents();
-        this.user = user;
+        setUser(user);
     }
 
     /**
@@ -65,9 +73,10 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Hasło :");
 
         Save1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        Save1.setText("Zapsiz");
+        Save1.setText("Zaloguj");
         Save1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                 handleSavePress(evt);
             }
         });
@@ -133,12 +142,17 @@ public class Login extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private void handleCancelPress(ActionEvent evt) {
+
         this.dispose();
     }
 
     private void handleSavePress(ActionEvent evt) {
-        user.setLogin(getLogin());
-        user.setPassword(getPassword());
+        getUser().setLogin(getLogin());
+        getUser().setPassword(getPassword());
+
+        WindowEvent closingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closingEvent);
+
         this.dispose();
     }
 

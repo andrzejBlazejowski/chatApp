@@ -27,7 +27,7 @@ public class ConnectionHandler implements Runnable{
             System.out.println("run method executed ");
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out.println("Please enter a login name");
+            out.println("Please login");
             login = in.readLine();
             System.out.println(login + "has joined chat");
             server.broadcast(login + "has joined chat");
@@ -45,7 +45,12 @@ public class ConnectionHandler implements Runnable{
                 }else if(msg.startsWith(ServerConfig.LogoutAction)) {
                     handleLogout();
                 }else{
-                    server.broadcast(user.getLogin() +": "+ msg);
+                    if (user != null) {
+                        server.broadcast(user.getLogin() + ServerConfig.Separator + msg);
+                    }
+                    else {
+                        server.broadcast("unsucesfull atempt to send a message - please login ");
+                    }
                 }
             }
         }catch (IOException e){
@@ -76,6 +81,7 @@ public class ConnectionHandler implements Runnable{
         if (arr.length == 2) {
             user = new User(arr);
             server.registerUser(user);
+            server.broadcast("new user was registered, welcome "+ user.getLogin());
         }
     }
     private void handleLogout(){

@@ -5,7 +5,9 @@ package client.Views.UserViews;/*
 
 import server.Models.User;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -47,7 +49,7 @@ public class Register extends javax.swing.JFrame {
         Save1 = new javax.swing.JButton();
         Cancel1 = new javax.swing.JButton();
 
-        Save.setText("Zapsiz");
+        Save.setText("Zarejestruj");
 
         Cancel.setText("Anuluj");
 
@@ -144,6 +146,10 @@ public class Register extends javax.swing.JFrame {
     private void handleSavePress(ActionEvent evt) {
         user.setLogin(getLogin());
         user.setPassword(getPassword());
+
+        WindowEvent closingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closingEvent);
+
         this.dispose();
     }
 

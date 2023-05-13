@@ -18,7 +18,7 @@ public class MessageListCellRenderer extends DefaultListCellRenderer {
             setHorizontalAlignment(SwingConstants.RIGHT);
         }
 
-        String text = "<html><b>" + message.getAuthor() + ":</b> " + message.getContent() + "</html>";
+        String text = (!message.getAuthor().isEmpty()? message.getAuthor() + " : " : "") + message.getContent() ;
         setText(text);
 
         return this;

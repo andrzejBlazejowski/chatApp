@@ -24,7 +24,7 @@ public class Message {
         this.setAuthor("");
     }
 
-    private void setAlignLeft(boolean b) {
+    public void setAlignLeft(boolean b) {
         this.alignLeft = b;
     }
 

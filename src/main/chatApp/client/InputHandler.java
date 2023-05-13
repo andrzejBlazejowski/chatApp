@@ -38,7 +38,7 @@ class InputHandler implements Runnable{
     }
 
     public void changeLogin(String login, String password){
-        client.getOut().println(ServerConfig.LoginAction + login + ServerConfig.Separator + password);
+        client.getOut().println(ServerConfig.ChangeLoginAction + login + ServerConfig.Separator + password);
     }
 
     public void sendMsg(String msg){

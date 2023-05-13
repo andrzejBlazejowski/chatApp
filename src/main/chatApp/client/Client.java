@@ -38,12 +38,6 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
             window.setLoginChangeActionListener(this);
             window.setRegisterActionListener(this);
             window.setSendMessageActionListener(this);
-            window.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    shutdown();
-                }
-            });
             window.setVisible(true);
 
             Socket client = new Socket(ServerConfig.HostAddress, ServerConfig.Port);

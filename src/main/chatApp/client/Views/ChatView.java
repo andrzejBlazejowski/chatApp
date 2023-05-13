@@ -158,7 +158,7 @@ public class ChatView extends javax.swing.JFrame {
 
     private void handleRegisterPress(ActionEvent evt) {
         Register window = new Register(getUser());
-        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.addWindowListener(new WindowAdapter() {
             @Override
@@ -178,7 +178,7 @@ public class ChatView extends javax.swing.JFrame {
 
     private void handleChangeLoginPress(ActionEvent evt) {
         ChangeLogin window = new ChangeLogin(getUser());
-        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         window.addWindowListener(new WindowAdapter() {
             @Override

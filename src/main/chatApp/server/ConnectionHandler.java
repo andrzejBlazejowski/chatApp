@@ -19,28 +19,24 @@ public class ConnectionHandler implements Runnable{
     public ConnectionHandler(Socket client, Server server){
         this.client = client;
         this.server = server;
-        System.out.println("new handler");
     }
     @Override
     public void run() {
         try{
-            System.out.println("run method executed ");
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out.println("Please login");
-            login = in.readLine();
-            System.out.println(login + "has joined chat");
-            server.broadcast(login + "has joined chat");
             String msg;
             while((msg = in.readLine()) != null){
 
                 System.out.println("new message");
-                if(msg.startsWith(ServerConfig.LoginAction) || msg.startsWith(ServerConfig.RegisterAction)){
+                if(msg.startsWith(ServerConfig.LoginAction) || msg.startsWith(ServerConfig.RegisterAction) || msg.startsWith(ServerConfig.ChangeLoginAction) ){
                     String[] messageSplit = msg.split(" ", 2);
                     if (msg.startsWith(ServerConfig.LoginAction)){
                         handleLogin(messageSplit[1]);
                     } else if (msg.startsWith(ServerConfig.RegisterAction)) {
                         handleRegister(messageSplit[1]);
+                    }else if(msg.startsWith(ServerConfig.ChangeLoginAction)) {
+                        handleLoginChange(messageSplit[1]);
                     }
                 }else if(msg.startsWith(ServerConfig.LogoutAction)) {
                     handleLogout();
@@ -59,6 +55,15 @@ public class ConnectionHandler implements Runnable{
         }
     }
 
+    private void handleLoginChange(String msg) {
+        String[] arr = msg.split(ServerConfig.Separator, 2);
+        if (arr.length == 2){
+            if (arr[1].equals(user.getPassword())){
+                user.setLogin(arr[0]);
+            }
+        }
+    }
+
     private void handleLogin( String message){
         String[] arr = message.split(ServerConfig.Separator, 2);
         if (arr.length == 2){
@@ -68,11 +73,14 @@ public class ConnectionHandler implements Runnable{
                 server.broadcast("logged in succesfully "+ user.getLogin());
             }else if(loginResponse == 403){
                 server.broadcast("passed in wrong login or password "+ user.getLogin());
+                user = null;
             } else if (loginResponse == 404) {
-                server.broadcast("login not foundin database, please register or enter existing user "+ user.getLogin());
+                server.broadcast("login not found in database, please register or enter existing user "+ user.getLogin());
+                user = null;
             }
         }else{
             System.out.println("no login entered or password");
+            user = null;
         }
     }
 

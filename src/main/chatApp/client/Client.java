@@ -6,14 +6,9 @@ import client.Listeners.RegisterActionListener;
 import client.Listeners.SendMessageActionListener;
 import client.Models.Message;
 import client.Views.ChatView;
-import client.Views.UserViews.ChangeLogin;
 import config.ServerConfig;
 import server.Models.User;
-import server.Server;
 
-import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
 

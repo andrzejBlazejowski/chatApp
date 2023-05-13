@@ -32,7 +32,10 @@ public class Client implements Runnable, LoginActionListener, LoginChangeActionL
         try{
             ChatView window = new ChatView();
             window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+            window.setLoginActionListener(this);
+            window.setLoginChangeActionListener(this);
+            window.setRegisterActionListener(this);
+            window.setSendMessageActionListener(this);
             window.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {

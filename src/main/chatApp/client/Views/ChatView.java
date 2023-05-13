@@ -1,5 +1,9 @@
 package client.Views;
 
+import client.Listeners.LoginActionListener;
+import client.Listeners.LoginChangeActionListener;
+import client.Listeners.RegisterActionListener;
+import client.Listeners.SendMessageActionListener;
 import client.Models.Message;
 import client.Views.Components.MessageListCellRenderer;
 import client.Views.UserViews.ChangeLogin;
@@ -20,6 +24,10 @@ public class ChatView extends javax.swing.JFrame {
     private DefaultListModel<Message> messageListModel;
     private User user;
     private String textInput;
+    private LoginActionListener loginActionListener;
+    private LoginChangeActionListener loginChangeActionListener;
+    private RegisterActionListener registerActionListener;
+    private SendMessageActionListener sendMessageActionListener;
 
 
     /**
@@ -149,7 +157,10 @@ public class ChatView extends javax.swing.JFrame {
     }
 
     private void handleRegisterUserChange() {
-        // TODO add your handling code here:
+        RegisterActionListener listener = getRegisterActionListener();
+        if (listener != null) {
+            listener.onRegisterActionListener(user);
+        }
     }
 
     private void handleChangeLoginPress(ActionEvent evt) {
@@ -166,11 +177,10 @@ public class ChatView extends javax.swing.JFrame {
     }
 
     private void handleChangeLoginUserChange() {
-        // TODO add your handling code here:
-    }
-
-    private void handleLoginUserChange() {
-        // TODO add your handling code here:
+        LoginChangeActionListener listener = getLoginChangeActionListener();
+        if (listener != null) {
+            listener.onLoginChangeActionListener(user);
+        }
     }
 
     private void handleLoginPress(ActionEvent evt) {
@@ -184,6 +194,13 @@ public class ChatView extends javax.swing.JFrame {
             }
         });
         window.setVisible(true);
+    }
+
+    private void handleLoginUserChange() {
+        LoginActionListener listener = getLoginActionListener();
+        if (listener != null) {
+            listener.onLoginActionListener(user);
+        }
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -262,6 +279,38 @@ public class ChatView extends javax.swing.JFrame {
         messageListModel.addElement(msg);
         MessageWrapper.repaint();
         MessageWrapper.ensureIndexIsVisible(messageListModel.size() - 1);
+    }
+
+    public void setLoginActionListener(LoginActionListener loginActionListener) {
+        this.loginActionListener = loginActionListener;
+    }
+
+    public void setLoginChangeActionListener(LoginChangeActionListener loginChangeActionListener) {
+        this.loginChangeActionListener = loginChangeActionListener;
+    }
+
+    public void setRegisterActionListener(RegisterActionListener registerActionListener) {
+        this.registerActionListener = registerActionListener;
+    }
+
+    public void setSendMessageActionListener(SendMessageActionListener sendMessageActionListener) {
+        this.sendMessageActionListener = sendMessageActionListener;
+    }
+
+    public LoginActionListener getLoginActionListener() {
+        return loginActionListener;
+    }
+
+    public LoginChangeActionListener getLoginChangeActionListener() {
+        return loginChangeActionListener;
+    }
+
+    public RegisterActionListener getRegisterActionListener() {
+        return registerActionListener;
+    }
+
+    public SendMessageActionListener getSendMessageActionListener() {
+        return sendMessageActionListener;
     }
     // End of variables declaration//GEN-END:variables
 }

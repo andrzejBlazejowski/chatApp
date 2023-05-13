@@ -50,6 +50,10 @@ public class Message {
 
 
     public static Message getMessageFromString(String msg){
+        msg = msg.replace(ServerConfig.ChangeLoginAction, "");
+        msg = msg.replace(ServerConfig.LoginAction, "");
+        msg = msg.replace(ServerConfig.RegisterAction, "");
+        msg = msg.replace(ServerConfig.LogoutAction, "");
         String[] arr = msg.split(ServerConfig.Separator, 2);
         Message message = new Message();
         if (arr.length == 2){

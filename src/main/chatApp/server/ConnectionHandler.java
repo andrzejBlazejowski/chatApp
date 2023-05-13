@@ -65,11 +65,11 @@ public class ConnectionHandler implements Runnable{
             user = new User(arr);
             int loginResponse = server.loginUser(user);
             if(loginResponse == 200){
-                server.broadcast("logged in succesfully");
+                server.broadcast("logged in succesfully "+ user.getLogin());
             }else if(loginResponse == 403){
-                server.broadcast("passed in wrong login or password");
+                server.broadcast("passed in wrong login or password "+ user.getLogin());
             } else if (loginResponse == 404) {
-                server.broadcast("login not foundin database, please register or enter existing user");
+                server.broadcast("login not foundin database, please register or enter existing user "+ user.getLogin());
             }
         }else{
             System.out.println("no login entered or password");

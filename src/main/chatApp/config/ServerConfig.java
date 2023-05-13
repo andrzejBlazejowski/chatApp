@@ -8,5 +8,6 @@ public class ServerConfig {
     public static String RegisterAction = "/register ";
     public static String LoginAction = "/login ";
     public static String LogoutAction = "/logout ";
+    public static String ChangeLoginAction = "/changeLogin ";
 
 }

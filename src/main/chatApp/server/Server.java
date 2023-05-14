@@ -11,28 +11,68 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server implements Runnable {
+
+
     private ArrayList<ConnectionHandler> connections;
     private ArrayList<User> users;
     private ServerSocket socket;
     private boolean done;
     private ExecutorService pool;
+    public ExecutorService getPool() {
+        return pool;
+    }
+
+    public void setPool(ExecutorService pool) {
+        this.pool = pool;
+    }
+    public ArrayList<ConnectionHandler> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(ArrayList<ConnectionHandler> connections) {
+        this.connections = connections;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    public ServerSocket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(ServerSocket socket) {
+        this.socket = socket;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 
     public Server() {
-        connections = new ArrayList<>();
-        users = new ArrayList<>();
-        done = false;
+        setConnections(new ArrayList<>());
+        setUsers(new ArrayList<>());
+        setDone(false);
     }
 
     @Override
     public void run() {
         try {
-            socket = new ServerSocket(ServerConfig.Port);
-            pool = Executors.newCachedThreadPool();
-            while(!done){
-                Socket client = socket.accept();
+            setSocket(new ServerSocket(ServerConfig.Port));
+            setPool(Executors.newCachedThreadPool());
+            while(!isDone()){
+                Socket client = getSocket().accept();
                 ConnectionHandler handler = new ConnectionHandler(client, this);
-                connections.add(handler);
-                pool.execute(handler);
+                getConnections().add(handler);
+                getPool().execute(handler);
             }
         } catch (Exception e) {
             System.out.println("could not open socket on serwer side.");
@@ -44,7 +84,7 @@ public class Server implements Runnable {
     }
 
     public void broadcast(String msg){
-        for (ConnectionHandler connection : connections){
+        for (ConnectionHandler connection : getConnections()){
             if( connection != null){
                 connection.sendMessage(msg);
             }
@@ -52,14 +92,14 @@ public class Server implements Runnable {
     }
 
     public void shoutdown(){
-        done = true;
-        if (!socket.isClosed()){
+        setDone(true);
+        if (!getSocket().isClosed()){
             try{
-                socket.close();
+                getSocket().close();
             }catch (IOException e){
                 System.out.println(e);
             }
-            for(ConnectionHandler connection : connections){
+            for(ConnectionHandler connection : getConnections()){
                 connection.shoutdown();
             }
         }
@@ -70,11 +110,11 @@ public class Server implements Runnable {
     }
 
     public void registerUser(User user) {
-        users.add(user);
+        getUsers().add(user);
     }
 
     public int loginUser(User user) {
-        for (User usr:users) {
+        for (User usr:getUsers()) {
             if (usr.getLogin().equals(user.getLogin())){
                 if (usr.getPassword().equals(user.getPassword())){
                     return 200;
